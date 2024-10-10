@@ -20,15 +20,16 @@ const resolvers = {
   },
   Mutation: {
     // create a user, sign a token, and send it back
-    addUser: async (parent, { input }, context) => {
+    addUser: async (parent, input, context) => {
+      console.log('input', input);
       const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
     },
     // login a user, sign a token, and send it back
-    login: async (parent, { input }, context) => {
+    login: async (parent, input, context) => {
       const user = await User.findOne({
-        $or: [{ username: input.username }, { email: input.email }],
+        email: input.email
       });
       if (!user) {
         throw new Error("Can't find this user");
@@ -44,7 +45,8 @@ const resolvers = {
     },
     // save a book to a user's `savedBooks` field
     saveBook: async (parent, { input }, context) => {
-      const user = context.user; // Assuming user is added to context via auth middleware
+      console.log(context.user);
+      const user = context.user; 
       if (!user) {
         throw new Error("You need to be logged in!");
       }
