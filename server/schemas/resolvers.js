@@ -5,7 +5,7 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // get a single user by either their id or their username
+    // get a single user
     me: async (parent, { userId, username }, context) => {
       const userData = await User.findOne({
         $or: [{ _id: userId }, { username }],
@@ -19,14 +19,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    // create a user, sign a token, and send it back
+    // create a user
     addUser: async (parent, input, context) => {
       console.log('input', input);
       const user = await User.create(input);
       const token = signToken(user);
       return { token, user };
     },
-    // login a user, sign a token, and send it back
+    // login a user
     login: async (parent, input, context) => {
       const user = await User.findOne({
         email: input.email
@@ -64,7 +64,7 @@ const resolvers = {
     },
     // remove a book from `savedBooks`
     removeBook: async (parent, { bookId }, context) => {
-      const user = context.user; // Assuming user is added to context via auth middleware
+      const user = context.user; 
       if (!user) {
         throw new Error("You need to be logged in!");
       }

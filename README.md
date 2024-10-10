@@ -25,7 +25,7 @@ To ustilise my portfolio you first need to clone the repository and open it in V
 
 ## Usage
 
-[Visit the live site here.]()
+[Visit the live site here.](https://book-search-engine-htk2.onrender.com/)
 
 This portfolio can be used by entering `npm run develop` with VS Code's terminal.
 
